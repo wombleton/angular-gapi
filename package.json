@@ -6,6 +6,7 @@
     "license": "MIT License, http://www.opensource.org/licenses/MIT",
     "homepage": "http://github.com/terencehonles/angular-gapi",
     "dependencies": {},
+    "main": "modules/gapi-client.js",
     "repository": {
         "type": "git",
         "url": "git://github.com/terencehonles/angular-gapi.git"

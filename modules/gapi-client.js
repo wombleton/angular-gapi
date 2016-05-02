@@ -36,7 +36,7 @@ angular.module('gapi.client', []).provider('gapi', function() {
                                 'passed to ready earlier or pass the ' +
                                 'deferred itself');
 
-            $scope.$apply(function() { _deferred.resolve($gapi); });
+            $scope.$applyAsync(function() { _deferred.resolve($gapi); });
         }
 
         $gapi = {
@@ -57,7 +57,7 @@ angular.module('gapi.client', []).provider('gapi', function() {
                         if (response) deferred.resolve(response);
                         else deferred.reject(response);
 
-                        $scope.$apply();
+                        $scope.$applyAsync();
                     });
 
                     return deferred.promise;
@@ -67,8 +67,8 @@ angular.module('gapi.client', []).provider('gapi', function() {
                     var deferred = $q.defer();
 
                     $window.gapi.auth.init(function() {
-                        deferred.resolve()
-                        if (!$scope.$$phase) $scope.$apply();
+                        deferred.resolve();
+                        $scope.$applyAsync();
                     });
 
                     return deferred.promise;
@@ -158,7 +158,7 @@ angular.module('gapi.client', []).provider('gapi', function() {
                         if (!$window.gapi.client[name]) deferred.reject();
                         else deferred.resolve($gapi.decorate(name));
 
-                        $scope.$apply();
+                        $scope.$applyAsync();
                     }, root);
 
                     return deferred.promise;
