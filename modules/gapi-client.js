@@ -25,7 +25,7 @@ angular.module('gapi.client', []).provider('gapi', function() {
         _authorization = options || {};
     }
 
-    this.$get = ['$q', '$rootScope', '$window', function($q, $scope, $window) {
+    this.$get = ['$q', '$rootScope', '$window', '$timeout', function($q, $scope, $window, $timeout) {
         var $gapi,
             _deferred = $q.defer(),
             _promise = _deferred.promise;
@@ -53,11 +53,13 @@ angular.module('gapi.client', []).provider('gapi', function() {
                     options = angular.extend({}, $gapi._authorization,
                                                  options || {});
 
-                    $window.gapi.auth.authorize(options, function(response) {
-                        if (response) deferred.resolve(response);
-                        else deferred.reject(response);
+                    $timeout(function () {
+                      $window.gapi.auth.authorize(options, function(response) {
+                          if (response) deferred.resolve(response);
+                          else deferred.reject(response);
 
-                        $scope.$applyAsync();
+                          $scope.$applyAsync();
+                      });
                     });
 
                     return deferred.promise;
